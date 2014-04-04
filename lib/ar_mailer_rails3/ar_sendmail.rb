@@ -39,6 +39,8 @@ module ArMailerRails3; end
 
 class ArMailerRails3::ARSendmail
 
+  YAML_OPTIONS = YAML.load_file("#{Rails.root}/config/ar_mailer.yml")
+
   ##
   # The version of ActionMailer::ARSendmail you are running.
 
@@ -364,6 +366,7 @@ class ArMailerRails3::ARSendmail
   # Delivers +emails+ to ActionMailer's SMTP server and destroys them.
 
   def deliver(emails)
+    smtp_settings = get_smtp_settings
     settings = [
       smtp_settings[:domain],
       (smtp_settings[:user] || smtp_settings[:user_name]),
@@ -482,8 +485,11 @@ class ArMailerRails3::ARSendmail
   # Falls back to ::server_settings if ::smtp_settings doesn't exist for
   # backwards compatibility.
 
-  def smtp_settings
-    ActionMailer::Base.smtp_settings rescue ActionMailer::Base.server_settings
+  def get_smtp_settings
+    options = YAML_OPTIONS
+    array_servers_with_weight = []
+    options.collect{ |k,v| [k, (v['weight'] || 1)] }.each{ |el| el.last.times{ array_servers_with_weight << el.first } }
+    number = array_servers_with_weight.size == 1 ? 0 : Random.rand(array_servers_with_weight.size - 1)
+    options[array_servers_with_weight[number]].symbolize_keys
   end
-
 end

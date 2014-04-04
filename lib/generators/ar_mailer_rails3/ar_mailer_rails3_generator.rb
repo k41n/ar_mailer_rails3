@@ -7,6 +7,9 @@ class ArMailerRails3Generator < Rails::Generators::NamedBase
   def create_ar_mailer_files
     self.class.check_class_collision class_name
     template('ar_mailer.rb', 'config/initializers/ar_mailer.rb')
+    smtp_settings = ActionMailer::Base.smtp_settings rescue ActionMailer::Base.server_settings
+    @hash = { 'server_0' => smtp_settings.merge(weight: 1).stringify_keys }
+    template('ar_mailer.yml', 'config/ar_mailer.yml')
     template('model.rb', File.join('app/models', class_path, "#{file_name}.rb"))
     migration_template 'migration.rb', "db/migrate/create_#{file_path.gsub(/\//, '_').pluralize}.rb"
   end
@@ -22,7 +25,7 @@ class ArMailerRails3Generator < Rails::Generators::NamedBase
       Time.now.utc.strftime("%Y%m%d%H%M%S")
     else
      "%.3d" % (current_migration_number(dirname) + 1)
-   end
+    end
   end
   
   def self.banner

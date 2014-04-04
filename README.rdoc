@@ -105,6 +105,24 @@ be loaded, so you don't need another TLS plugin to add the capability. This
 patch allows you to explicit set if the server supports TLS by setting the
 :tls option to true in your smtp_settings.
 
+=== Multi SMTP
+
+If you need to use multiple SMTP, you should change the file '/config/ar_mailer.yml' by adding new configuration.
+After you run this command './script/generate ar_mailer_rails3' file '/config/ar_mailer.yml' will contain your current configuration from file '/config/initializers/smtp.rb' in following format:
+
+  server_0:
+    address: address.ru
+    port: 25
+    domain: domain.ru
+    authentication: :login
+    user_name: user_name.ru
+    password: password
+    weight: 1
+
+To add additional SMTP server, you should add new complete file '/config/ar_mailer.yml' with same configuration.
+
+Key :weigth is responsible for servers loading, the greater is weight the bigger is traffic on this server.
+
 === Help
 
 See ar_sendmail_rails3 -h for options to ar_sendmail_rails3.
