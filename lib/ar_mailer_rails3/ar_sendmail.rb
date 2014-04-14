@@ -419,6 +419,7 @@ class ArMailerRails3::ARSendmail
     sleep delay
   rescue Net::SMTPServerBusy, SystemCallError, OpenSSL::SSL::SSLError
     log $!.message
+    log $!.backtrace.join("\n")
     # ignore SMTPServerBusy/EPIPE/ECONNRESET from Net::SMTP.start's ensure
   end
 
