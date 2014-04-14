@@ -475,6 +475,8 @@ class ArMailerRails3::ARSendmail
         deliver(emails) unless emails.empty?
       rescue
         log $!.message
+        log $!.backtrace.join("\n")
+
       end
       break if @once
       sleep @delay
