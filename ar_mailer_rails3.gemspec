@@ -33,10 +33,7 @@ Gem::Specification.new do |s|
      "lib/generators/ar_mailer_rails3/templates/ar_mailer.rb",
      "lib/generators/ar_mailer_rails3/templates/migration.rb",
      "lib/generators/ar_mailer_rails3/templates/model.rb",
-     "lib/smtp_tls.rb",
-     "test/test_armailer.rb",
-     "test/test_arsendmail.rb",
-     "test/test_helper.rb"
+     "lib/smtp_tls.rb"
   ]
   s.homepage = %q{http://github.com/yzhang/ar_mailer_rails3}
   s.rdoc_options = ["--charset=UTF-8"]

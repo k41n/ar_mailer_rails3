@@ -1,6 +1,7 @@
 require 'optparse'
 require 'net/smtp'
 require 'smtp_tls' unless Net::SMTP.instance_methods.include?("enable_starttls_auto")
+require 'yaml'
 
 ##
 # Hack in RSET
@@ -38,7 +39,6 @@ end
 module ArMailerRails3; end
 
 class ArMailerRails3::ARSendmail
-
   YAML_OPTIONS = YAML.load_file("#{Rails.root}/config/ar_mailer.yml")
 
   ##
