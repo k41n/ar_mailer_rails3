@@ -367,6 +367,7 @@ class ArMailerRails3::ARSendmail
 
   def deliver(emails)
     smtp_settings = get_smtp_settings
+    log "smtp_settings: #{smtp_settings.inspect}"
     settings = [
       smtp_settings[:domain],
       (smtp_settings[:user] || smtp_settings[:user_name]),
