@@ -39,7 +39,7 @@ end
 module ArMailerRails3; end
 
 class ArMailerRails3::ARSendmail
-  YAML_OPTIONS = YAML.load_file("#{Rails.root}/config/ar_mailer.yml")
+  YAML_OPTIONS = YAML.load_file("config/ar_mailer.yml")
 
   ##
   # The version of ActionMailer::ARSendmail you are running.
