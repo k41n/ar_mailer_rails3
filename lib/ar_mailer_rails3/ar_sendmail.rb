@@ -495,7 +495,7 @@ class ArMailerRails3::ARSendmail
     options = YAML_OPTIONS
     array_servers_with_weight = []
     options.collect{ |k,v| [k, (v['weight'] || 1)] }.each{ |el| el.last.times{ array_servers_with_weight << el.first } }
-    number = array_servers_with_weight.size == 1 ? 0 : Random.rand(array_servers_with_weight.size - 1)
+    number = array_servers_with_weight.size == 1 ? 0 : Random.rand(array_servers_with_weight.size)
     options[array_servers_with_weight[number]].symbolize_keys
   end
 end
