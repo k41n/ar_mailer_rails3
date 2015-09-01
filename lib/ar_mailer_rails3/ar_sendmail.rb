@@ -94,11 +94,11 @@ class ArMailerRails3::ARSendmail
 
   ##
   # Get email class
-  
+
   def self.email_class
     ActionMailer::Base.active_record_settings[:email_class]
   end
-  
+
   ##
   # Prints a list of unsent emails and the last delivery attempt, if any.
   #
@@ -107,7 +107,7 @@ class ArMailerRails3::ARSendmail
   # to learn how to enable ActiveRecord::Timestamp.
 
   def self.mailq
-    emails = self.email_class.find :all
+    emails = self.email_class.all
 
     if emails.empty? then
       puts "Mail queue is empty"
@@ -437,9 +437,9 @@ class ArMailerRails3::ARSendmail
   # last 300 seconds.
 
   def find_emails
-    options = { :conditions => ['last_send_attempt < ?', Time.now.to_i - 300] }
-    options[:limit] = batch_size unless batch_size.nil?
-    mail = self.class.email_class.find :all, options
+    conditions = ['last_send_attempt < ?', Time.now.to_i - 300]
+    mail = self.class.email_class.where(conditions)
+    mail = mail.limit(batch_size) unless batch_size.nil?
 
     log "found #{mail.length} emails to send"
     mail
